@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ican.mapper.ArticleMapper">
+
+    <resultMap id="articleBackVO" type="com.ican.model.vo.ArticleBackVO">
+        <id property="id" column="id"/>
+        <result property="articleCover" column="article_cover"/>
+        <result property="articleTitle" column="article_title"/>
+        <result property="articleType" column="article_type"/>
+        <result property="isTop" column="is_top"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="status" column="status"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="createTime" column="create_time"/>
+        <collection property="tagVOList" ofType="com.ican.model.vo.TagVO">
+            <id property="id" column="tag_id"/>
+            <result property="tagName" column="tag_name"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="articleVO" type="com.ican.model.vo.ArticleVO">
+        <id property="id" column="id"/>
+        <result property="articleTitle" column="article_title"/>
+        <result property="articleContent" column="article_content"/>
+        <result property="articleType" column="article_type"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <association property="category" javaType="com.ican.model.vo.CategoryOptionVO">
+            <id property="id" column="category_id"/>
+            <result property="categoryName" column="category_name"/>
+        </association>
+        <collection property="tagVOList" ofType="com.ican.model.vo.TagVO">
+            <id property="id" column="tag_id"/>
+            <result property="tagName" column="tag_name"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="articleHomeVO" type="com.ican.model.vo.ArticleHomeVO">
+        <id property="id" column="id"/>
+        <result property="articleCover" column="article_cover"/>
+        <result property="articleTitle" column="article_title"/>
+        <result property="articleContent" column="article_content"/>
+        <result property="isTop" column="is_top"/>
+        <result property="createTime" column="create_time"/>
+        <association property="category" javaType="com.ican.model.vo.CategoryOptionVO">
+            <id property="id" column="category_id"/>
+            <result property="categoryName" column="category_name"/>
+        </association>
+        <collection property="tagVOList" ofType="com.ican.model.vo.TagVO">
+            <id property="id" column="tag_id"/>
+            <result property="tagName" column="tag_name"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="articleConditionVO" type="com.ican.model.vo.ArticleConditionVO">
+        <id property="id" column="id"/>
+        <result property="articleCover" column="article_cover"/>
+        <result property="articleTitle" column="article_title"/>
+        <result property="createTime" column="create_time"/>
+        <association property="category" javaType="com.ican.model.vo.CategoryOptionVO">
+            <id property="id" column="category_id"/>
+            <result property="categoryName" column="category_name"/>
+        </association>
+        <collection property="tagVOList" ofType="com.ican.model.vo.TagVO">
+            <id property="id" column="tag_id"/>
+            <result property="tagName" column="tag_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="countArticleBackVO" resultType="java.lang.Integer">
+        SELECT COUNT(DISTINCT a.id)
+        FROM t_article a
+        INNER JOIN t_article_tag tat ON a.id = tat.article_id
+        <where>
+            is_delete=#{condition.isDelete}
+            <if test="condition.keyword != null">
+                and article_title like concat('%',#{condition.keyword},'%')
+            </if>
+            <if test="condition.status != null">
+                and `status` = #{condition.status}
+            </if>
+            <if test="condition.articleType != null">
+                and article_type = #{condition.articleType}
+            </if>
+            <if test="condition.categoryId != null">
+                and category_id = #{condition.categoryId}
+            </if>
+            <if test="condition.tagId != null">
+                and tat.tag_id = #{condition.tagId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectArticleBackVO" resultMap="articleBackVO">
+        SELECT a.id,
+        article_cover,
+        article_title,
+        article_type,
+        category_name,
+        t.id AS tag_id,
+        tag_name,
+        is_top,
+        is_delete,
+        `status`,
+        a.create_time
+        FROM t_article a
+        INNER JOIN t_category c ON a.category_id = c.id
+        INNER JOIN t_article_tag tat ON a.id = tat.article_id
+        INNER JOIN t_tag t ON tat.tag_id = t.id
+        <where>
+            is_delete=#{condition.isDelete}
+            <if test="condition.keyword!=null">
+                and article_title like concat('%',#{condition.keyword},'%')
+            </if>
+            <if test="condition.status!=null">
+                and status=#{condition.status}
+            </if>
+            <if test="condition.articleType != null">
+                and article_type = #{condition.articleType}
+            </if>
+            <if test="condition.categoryId!=null">
+                and category_id=#{condition.categoryId}
+            </if>
+            <if test="condition.tagId!=null">
+                and tag_id = #{condition.tagId}
+            </if>
+        </where>
+        order by is_top DESC, a.id desc
+        LIMIT #{limit},#{size}
+    </select>
+
+    <select id="selectArticleBackById" resultType="com.ican.entity.Article">
+        SELECT id,
+               category_id,
+               article_cover,
+               article_title,
+               article_content,
+               article_type,
+               is_top,
+               `status`
+        FROM t_article
+        WHERE id = #{articleId}
+    </select>
+
+    <select id="selectArticleById" resultMap="articleVO">
+        SELECT a.id,
+               article_title,
+               article_content,
+               article_type,
+               a.create_time,
+               a.update_time,
+               c.id AS category_id,
+               c.category_name,
+               t.id AS tag_id,
+               tag_name
+        FROM t_article a
+                 INNER JOIN t_category c ON a.category_id = c.id
+                 INNER JOIN t_article_tag tat ON a.id = tat.article_id
+                 INNER JOIN t_tag t ON tat.tag_id = t.id
+        WHERE is_delete = 0
+          AND `status` = 1
+          AND a.id = #{articleId}
+    </select>
+
+    <select id="selectLastArticle" resultType="com.ican.model.vo.ArticlePaginationVO">
+        SELECT id, article_cover, article_title
+        FROM t_article
+        WHERE is_delete = 0
+          AND `status` = 1
+          AND id &lt; #{articleId}
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+
+    <select id="selectNextArticle" resultType="com.ican.model.vo.ArticlePaginationVO">
+        SELECT id, article_cover, article_title
+        FROM t_article
+        WHERE is_delete = 0
+          AND `status` = 1
+          AND id &gt; #{articleId}
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+
+    <select id="selectArticleHomeList" resultMap="articleHomeVO">
+        SELECT a.id,
+               article_cover,
+               article_title,
+               SUBSTR(article_content, 1, 500) AS article_content,
+               is_top,
+               a.create_time,
+               c.id                            AS category_id,
+               category_name,
+               t.id                            AS tag_id,
+               tag_name
+        FROM t_article a
+                 INNER JOIN t_category c ON a.category_id = c.id
+                 INNER JOIN t_article_tag tat ON a.id = tat.article_id
+                 INNER JOIN t_tag t ON tat.tag_id = t.id
+        WHERE is_delete = 0
+          AND `status` = 1
+        ORDER BY is_top DESC,
+                 a.id DESC
+        LIMIT #{limit} , #{size}
+    </select>
+
+    <select id="selectArchiveList" resultType="com.ican.model.vo.ArchiveVO">
+        SELECT id, article_title, create_time
+        FROM t_article
+        WHERE is_delete = 0
+          AND `status` = 1
+        ORDER BY create_time
+        LIMIT #{limit},#{size}
+    </select>
+
+    <select id="selectArticleStatistics" resultType="com.ican.model.vo.ArticleStatisticsVO">
+        SELECT DATE_FORMAT(create_time, "%Y-%m-%d") AS date,
+               COUNT(1)                             AS count
+        FROM t_article
+        GROUP BY date
+        ORDER BY date DESC
+    </select>
+
+    <select id="searchArticle" resultType="com.ican.model.vo.ArticleSearchVO">
+        SELECT id,
+        article_title,
+        article_content,
+        is_delete,
+        `status`
+        FROM t_article
+        <where>
+            is_delete = 0 and `status` = 1
+            <if test="keyword!=null">
+                and (article_title like concat('%',#{keyword},'%')
+                or article_content like concat('%',#{keyword},'%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRecentArticle" resultType="com.ican.model.vo.LastArticleVO">
+        SELECT id,
+               article_title,
+               create_time
+        FROM t_article
+        WHERE is_delete = 0
+          AND `status` = 1
+        ORDER BY create_time DESC
+        LIMIT 5
+    </select>
+
+    <select id="listArticlesByCondition" resultMap="articleConditionVO">
+        SELECT a.id,
+        article_cover,
+        article_title,
+        a.create_time,
+        c.id AS category_id,
+        c.category_name,
+        t.id AS tag_id,
+        tag_name
+        FROM t_article a
+        INNER JOIN t_category c ON a.category_id = c.id
+        INNER JOIN t_article_tag tat ON a.id = tat.article_id
+        INNER JOIN t_tag t ON tat.tag_id = t.id
+        <where>
+            is_delete = 0 and `status` = 1
+            <if test="condition.categoryId != null">
+                and category_id = #{condition.categoryId}
+            </if>
+            <if test="condition.tagId != null">
+                and tag_id = #{condition.tagId}
+            </if>
+        </where>
+        ORDER BY a.id DESC
+        LIMIT #{limit},#{size}
+    </select>
+</mapper>

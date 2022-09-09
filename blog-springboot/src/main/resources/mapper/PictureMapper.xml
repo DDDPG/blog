@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ican.mapper.PictureMapper">
+
+    <select id="selectPictureBackVOList" resultType="com.ican.model.vo.PictureBackVO">
+        SELECT id, picture_url, picture_name, picture_desc
+        FROM t_picture
+        WHERE is_delete = #{condition.isDelete} LIMIT #{limit}
+            , #{size}
+    </select>
+
+    <select id="selectPictureVOList" resultType="com.ican.model.vo.PictureVO">
+        SELECT id, picture_url
+        FROM `t_picture`
+        WHERE is_delete = 0
+    </select>
+</mapper>

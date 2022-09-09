@@ -1,0 +1,75 @@
+{
+  "name": "blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "animate.css": "^3.7.2",
+    "axios": "^0.27.2",
+    "clipboard": "^2.0.11",
+    "core-js": "^3.8.3",
+    "dayjs": "^1.11.3",
+    "element-resize-detector": "^1.2.4",
+    "jquery": "^3.6.1",
+    "js-cookie": "^3.0.1",
+    "markdown-it": "^13.0.1",
+    "markdown-it-abbr": "^1.0.4",
+    "markdown-it-container": "^3.0.0",
+    "markdown-it-deflist": "^2.1.0",
+    "markdown-it-emoji": "^2.0.2",
+    "markdown-it-footnote": "^3.0.3",
+    "markdown-it-ins": "^3.0.1",
+    "markdown-it-katex-external": "^1.0.0",
+    "markdown-it-mark": "^3.0.1",
+    "markdown-it-sub": "^1.0.0",
+    "markdown-it-sup": "^1.0.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "nprogress": "^0.2.0",
+    "tocbot": "^4.18.2",
+    "v-viewer": "^1.6.4",
+    "vue": "^2.6.14",
+    "vue-avatar-cropper": "^1.0.9",
+    "vue-cute-timeline": "^1.2.10",
+    "vue-danmaku": "^1.5.0",
+    "vue-router": "^3.1.6",
+    "vuetify": "^2.6.4",
+    "vuex": "^3.4.0",
+    "vuex-persistedstate": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
+    "vue-template-compiler": "^2.6.14",
+    "vuetify-loader": "^1.9.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

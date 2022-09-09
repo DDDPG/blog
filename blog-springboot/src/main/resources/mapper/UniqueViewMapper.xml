@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ican.mapper.UniqueViewMapper">
+
+    <select id="selectUniqueView" resultType="com.ican.model.vo.UniqueViewVO">
+        SELECT DATE_FORMAT(create_time, "%Y-%m-%d") AS `date`,
+               view_count
+        FROM t_unique_view
+        WHERE create_time &gt; #{startTime}
+          AND create_time &lt;= #{endTime}
+        ORDER BY create_time
+    </select>
+</mapper>
