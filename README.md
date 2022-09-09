@@ -2,7 +2,7 @@
 
 <p align=center>
   <a href="https://www.ttkwsd.top">
-    <img src="https://static.ttkwsd.top/config/9c65807710f54d9d5ad398a78216ebfb.jpg" alt="阿冬的个人博客" style="border-radius: 50%;max-width: 10rem;">
+    <img src="https://foruda.gitee.com/avatar/1662735858745624876/7774198_wu_shengdong_1662735858.png" alt="阿冬的个人博客" style="border-radius: 50%;">
   </a>
 </p>
 
