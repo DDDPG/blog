@@ -134,21 +134,19 @@ blog-springboot
 
 ## 项目截图
 
-![博客首页.png](https://i0.hdslb.com/bfs/album/f54944d7bffa9e8c32c307fa354e8af468274b3c.png)
+![博客首页.png](https://static.ttkwsd.top/articles/home.png)
 
-![article.jpg](https://i0.hdslb.com/bfs/album/b1c56cc2a588fd4119e5402e8afeccb9d9e5d593.png)
-
-
-
-![friend.png](https://i0.hdslb.com/bfs/album/a65b0c4cdb691b7262afe486c13fd87abdfb0322.png)
+![article.jpg](https://static.ttkwsd.top/articles/articles.png)
 
 
 
-![admin.png](https://i0.hdslb.com/bfs/album/1b6417edb9d3f31cad632a810cc0b625bc426106.png)
+![friend.png](https://static.ttkwsd.top/articles/friend.png)
 
-![comment.png](https://i0.hdslb.com/bfs/album/d716f8ed03373f6a126494bc2eed4c44c002813c.png)
+![admin.png](https://static.ttkwsd.top/articles/admin.png)
 
-![picture.png](https://i0.hdslb.com/bfs/album/019ff317de05a7f6a1e9586819d8eec15b75fc6d.png)
+![comment.png](https://static.ttkwsd.top/articles/comment.png)
+
+![picture.png](https://static.ttkwsd.top/articles/picture.png)
 
 ## 注意事项
 
