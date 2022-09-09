@@ -32,8 +32,6 @@
 
 **后台链接：** [admin.ttkwsd.top](https://admin.ttkwsd.top)
 
-**Github地址：** [https://github.com/X1192176811/blog](https://github.com/X1192176811/blog)
-
 **Gitee地址：** [https://gitee.com/wu_shengdong/blog](https://gitee.com/wu_shengdong/blog)
 
 如果您觉得我写得不错的话，就给我个star吧，您的star就是对我的最大的鼓励。
