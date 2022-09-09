@@ -80,14 +80,15 @@ blog-springboot
 - 添加点赞，取消点赞功能。
 - 评论支持表情输入回复等，样式参考B站评论区。
 - 邮件模板评论回复提醒，页面美观。
-- 添加音乐播放器。
+- 添加音乐播放器，在线听音乐。
 - 前后端分离部署，适应当前潮流。
 - 接入第三方登录，减少注册成本。
 - 支持发布说说，随时分享趣事。
+- 含有友链功能，结交更多朋友。
 - 留言采用弹幕墙，更加炫酷。
 - 支持代码高亮和复制，图片预览，深色模式等功能，提升用户体验。
 - 搜索文章支持高亮分词，拼音搜索，响应速度快。
-- 新增文章目录、最新文章等功能，优化用户体验。
+- 新增文章目录、最新评论、最新文章等功能，优化用户体验。
 - 新增aop注解实现日志管理。  
 - 后台管理支持B站图床，博客配置，Excel导出等信息，操作简单。
 - 代码支持多种搜索模式（Elasticsearch或MYSQL），支持多种上传模式（OSS、COS、本地），可支持配置。
@@ -97,7 +98,7 @@ blog-springboot
 
 **前端：** vue + vuex + vue-router + axios + vuetify + element-ui + echarts
 
-**后端：** SpringBoot + Nginx + Docker + SpringSecurity + Swagger2 + MyBatisPlus + Mysql + Redis + ElasticSearch + RabbitMQ
+**后端：** SpringBoot + Thymeleaf + Nginx + Docker + SpringSecurity + Swagger2 + MyBatisPlus + Mysql + Redis + ElasticSearch + RabbitMQ
 
 **其他：** 接入QQ、微博、Gitee、Github第三方登录
 
@@ -135,8 +136,6 @@ blog-springboot
 ![博客首页.png](https://static.ttkwsd.top/articles/home.png)
 
 ![article.jpg](https://static.ttkwsd.top/articles/articles.png)
-
-
 
 ![friend.png](https://static.ttkwsd.top/articles/friend.png)
 
