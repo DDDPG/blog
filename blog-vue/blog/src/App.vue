@@ -17,7 +17,7 @@
     <ForgetModel></ForgetModel>
     <EmailModel></EmailModel>
     <SearchModel></SearchModel>
-    <MusicPlayer v-if="!isMusicPlayer"></MusicPlayer>
+    <MusicPlayer v-if="isMusicPlayer"></MusicPlayer>
   </div>
 </template>
 
@@ -58,11 +58,6 @@ export default {
       blogLogo: "",
       percent: 0,
     };
-  },
-  computed: {
-    isMessage() {
-      return this.$route.path == "/message";
-    },
   },
   created() {
     console.log(
@@ -118,10 +113,13 @@ export default {
         this.blogLogo = "";
       }
     },
-    computed: {
-      isMusicPlayer() {
-        return this.$store.state.blogInfo.websiteDTO.isMusicPlayer;
-      },
+  },
+  computed: {
+    isMessage() {
+      return this.$route.path == "/message";
+    },
+    isMusicPlayer() {
+      return this.$store.state.blogInfo.websiteDTO.isMusicPlayer;
     },
   },
   beforeDestroy() {
