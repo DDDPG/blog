@@ -67,6 +67,7 @@ blog-springboot
 ├── manager       --  异步任务管理器模块
 ├── mapper        --  Mapper文件模块
 ├── model         --  dto、vo模块
+├── quartz        --  定时任务模块
 ├── service       --  服务模块
 ├── strategy      --  策略模块（用于扩展第三方登录、搜索模式、上传文件模式、点赞模式等策略）
 └── utils         --  工具类模块
@@ -98,7 +99,7 @@ blog-springboot
 
 **前端：** vue + vuex + vue-router + axios + vuetify + element-ui + echarts
 
-**后端：** SpringBoot + Thymeleaf + Nginx + Docker + SpringSecurity + Swagger2 + MyBatisPlus + Mysql + Redis + ElasticSearch + RabbitMQ
+**后端：** SpringBoot + Quartz + Thymeleaf + Nginx + Docker + SpringSecurity + Swagger2 + MyBatisPlus + Mysql + Redis + ElasticSearch + RabbitMQ
 
 **其他：** 接入QQ、微博、Gitee、Github第三方登录
 
