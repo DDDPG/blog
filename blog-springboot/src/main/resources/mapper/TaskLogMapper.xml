@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ican.mapper.TaskLogMapper">
+
+    <select id="selectTaskLogCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) from t_task_log
+        <where>
+            <if test="condition.taskName != null">
+                AND task_name like concat('%', #{condition.taskName}, '%')
+            </if>
+            <if test="condition.taskGroup != null">
+                AND task_group = #{condition.taskGroup}
+            </if>
+            <if test="condition.status != null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.invokeTarget != null">
+                AND invoke_target like concat('%', #{condition.invokeTarget}, '%')
+            </if>
+            <if test="condition.startTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{condition.startTime},'%y%m%d')
+            </if>
+            <if test="condition.endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{condition.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectTaskLogVOList" resultType="com.ican.model.vo.TaskLogVO">
+        SELECT * from t_task_log
+        <where>
+            <if test="condition.taskName != null">
+                AND task_name like concat('%', #{condition.taskName}, '%')
+            </if>
+            <if test="condition.taskGroup != null">
+                AND task_group = #{condition.taskGroup}
+            </if>
+            <if test="condition.status != null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.invokeTarget != null">
+                AND invoke_target like concat('%', #{condition.invokeTarget}, '%')
+            </if>
+            <if test="condition.startTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{condition.startTime},'%y%m%d')
+            </if>
+            <if test="condition.endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{condition.endTime},'%y%m%d')
+            </if>
+        </where>
+        ORDER BY create_time
+        LIMIT #{limit},#{size}
+    </select>
+</mapper>

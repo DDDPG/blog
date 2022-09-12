@@ -1,12 +1,10 @@
 package com.ican.controller;
 
-import com.ican.model.vo.ExceptionLogVO;
-import com.ican.model.vo.OperationLogVO;
+import com.ican.model.vo.*;
 import com.ican.model.dto.ConditionDTO;
-import com.ican.model.vo.PageResult;
-import com.ican.model.vo.Result;
 import com.ican.service.ExceptionLogService;
 import com.ican.service.OperationLogService;
+import com.ican.service.TaskLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,9 @@ public class LogController {
 
     @Autowired
     private ExceptionLogService exceptionLogService;
+
+    @Autowired
+    private TaskLogService taskLogService;
 
     /**
      * 查看操作日志
@@ -84,10 +85,47 @@ public class LogController {
      *
      * @return {@link Result<>}
      */
+    @ApiOperation(value = "导出操作日志")
     @GetMapping("/admin/operation/logs/export")
     public Result<?> exportExceptionLog() {
         operationLogService.exportExceptionLog();
         return Result.success();
     }
 
+    /**
+     * 查看定时任务日志
+     *
+     * @param condition 条件
+     * @return {@link PageResult<TaskLogVO>} 后台定时任务日志
+     */
+    @ApiOperation("查看定时任务日志")
+    @GetMapping("/admin/task/logs")
+    public Result<PageResult<TaskLogVO>> listTaskLogs(ConditionDTO condition) {
+        return Result.success(taskLogService.listTaskLogs(condition));
+    }
+
+    /**
+     * 删除定时任务日志
+     *
+     * @param logIdList 日志id集合
+     * @return {@link Result<>}
+     */
+    @ApiOperation("删除定时任务的日志")
+    @DeleteMapping("/admin/task/logs")
+    public Result<?> deleteTaskLog(@RequestBody List<Integer> logIdList) {
+        taskLogService.removeByIds(logIdList);
+        return Result.success();
+    }
+
+    /**
+     * 清空定时任务日志
+     *
+     * @return {@link Result<>}
+     */
+    @ApiOperation("删除定时任务的日志")
+    @DeleteMapping("/admin/task/logs/clean")
+    public Result<?> cleanTaskLog() {
+        taskLogService.cleanTaskLog();
+        return Result.success();
+    }
 }
