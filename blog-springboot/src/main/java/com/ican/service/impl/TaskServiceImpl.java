@@ -2,6 +2,7 @@ package com.ican.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ican.constant.ScheduleConstants;
 import com.ican.entity.Task;
 import com.ican.enums.TaskStatusEnum;
 import com.ican.exception.ServiceException;
@@ -9,6 +10,7 @@ import com.ican.mapper.TaskMapper;
 import com.ican.model.dto.ConditionDTO;
 import com.ican.model.dto.StatusDTO;
 import com.ican.model.dto.TaskDTO;
+import com.ican.model.dto.TaskRunDTO;
 import com.ican.model.vo.PageResult;
 import com.ican.model.vo.TaskBackVO;
 import com.ican.service.TaskService;
@@ -16,6 +18,7 @@ import com.ican.utils.BeanCopyUtils;
 import com.ican.utils.CronUtils;
 import com.ican.utils.PageUtils;
 import com.ican.utils.ScheduleUtils;
+import org.quartz.JobDataMap;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -145,6 +148,23 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
             } catch (SchedulerException e) {
                 throw new ServiceException("更新定时任务状态异常");
             }
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void runTask(TaskRunDTO taskRun) {
+        Integer taskId = taskRun.getId();
+        String taskGroup = taskRun.getTaskGroup();
+        // 查询定时任务
+        Task task = taskMapper.selectById(taskRun.getId());
+        // 设置参数
+        JobDataMap dataMap = new JobDataMap();
+        dataMap.put(ScheduleConstants.TASK_PROPERTIES, task);
+        try {
+            scheduler.triggerJob(ScheduleUtils.getJobKey(taskId, taskGroup), dataMap);
+        } catch (SchedulerException e) {
+            throw new ServiceException("执行定时任务异常");
         }
     }
 

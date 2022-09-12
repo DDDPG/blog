@@ -9,6 +9,7 @@ import com.ican.model.vo.PageResult;
 import com.ican.model.vo.Result;
 import com.ican.model.vo.TaskBackVO;
 import com.ican.service.TaskService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,11 @@ import java.util.List;
 import static com.ican.constant.OptTypeConstant.*;
 
 /**
+ * 定时任务控制器
+ *
  * @author ican
  */
+@Api(tags = "定时任务模块")
 @RestController
 public class TaskController {
 
@@ -97,8 +101,8 @@ public class TaskController {
     /**
      * 定时任务立即执行一次
      *
-     * @param taskRun
-     * @return
+     * @param taskRun 运行定时任务
+     * @return {@link Result<>}
      */
     @ApiOperation("定时任务立即执行一次")
     @PutMapping("/admin/tasks/run")

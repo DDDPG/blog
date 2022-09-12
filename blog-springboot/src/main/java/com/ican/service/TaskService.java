@@ -5,6 +5,7 @@ import com.ican.entity.Task;
 import com.ican.model.dto.ConditionDTO;
 import com.ican.model.dto.StatusDTO;
 import com.ican.model.dto.TaskDTO;
+import com.ican.model.dto.TaskRunDTO;
 import com.ican.model.vo.PageResult;
 import com.ican.model.vo.TaskBackVO;
 
@@ -52,4 +53,11 @@ public interface TaskService extends IService<Task> {
      * @param taskStatus 定时任务状态
      */
     void updateTaskStatus(StatusDTO taskStatus);
+
+    /**
+     * 定时任务立即执行一次
+     *
+     * @param taskRun 定时任务
+     */
+    void runTask(TaskRunDTO taskRun);
 }
