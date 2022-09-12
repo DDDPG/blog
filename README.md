@@ -44,7 +44,7 @@
 
 后端项目位于blog-springboot下。
 
-SQL文件位于根目录下的blog-mysql8.sql，需要MYSQL8以上版本。
+SQL文件位于根目录下的blog.sql。
 
 ElasticSearch的mapper映射位于根目录下的mapper.json。
 
