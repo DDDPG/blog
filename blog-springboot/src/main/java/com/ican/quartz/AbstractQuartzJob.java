@@ -67,14 +67,11 @@ public abstract class AbstractQuartzJob implements Job {
         Date startTime = threadLocal.get();
         threadLocal.remove();
         final TaskLog taskLog = new TaskLog();
-        taskLog.setTaskId(task.getId());
         taskLog.setTaskName(task.getTaskName());
         taskLog.setTaskGroup(task.getTaskGroup());
         taskLog.setInvokeTarget(task.getInvokeTarget());
-        taskLog.setStartTime(startTime);
-        taskLog.setEndTime(new Date());
-        long runMs = taskLog.getEndTime().getTime() - taskLog.getStartTime().getTime();
-        taskLog.setTaskMessage(taskLog.getTaskName() + " 总共耗时：" + runMs + "毫秒");
+        long runTime = new Date().getTime() - startTime.getTime();
+        taskLog.setTaskMessage(taskLog.getTaskName() + " 总共耗时：" + runTime + "毫秒");
         if (e != null) {
             taskLog.setStatus(FALSE);
             String errorMsg = StringUtils.substring(ExceptionUtils.getExceptionMessage(e), 0, 2000);

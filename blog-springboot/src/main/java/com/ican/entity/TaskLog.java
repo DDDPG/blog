@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * 定时任务日志
@@ -26,11 +25,6 @@ public class TaskLog {
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
-
-    /**
-     * 任务id
-     */
-    private Integer taskId;
 
     /**
      * 任务名称
@@ -67,15 +61,4 @@ public class TaskLog {
      */
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-
-    /**
-     * 开始时间
-     */
-    private Date startTime;
-
-    /**
-     * 停止时间
-     */
-    private Date endTime;
-
 }

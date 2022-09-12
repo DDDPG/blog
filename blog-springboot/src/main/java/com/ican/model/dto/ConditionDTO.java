@@ -89,4 +89,19 @@ public class ConditionDTO {
      * 任务组名
      */
     private String taskGroup;
+
+    /**
+     * 调用目标
+     */
+    private String invokeTarget;
+
+    /**
+     * 开始时间
+     */
+    private String startTime;
+
+    /**
+     * 结束时间
+     */
+    private String endTime;
 }

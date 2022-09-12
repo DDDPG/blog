@@ -2,6 +2,7 @@ package com.ican.constant;
 
 /**
  * 日志操作类型常量
+ *
  * @author ican
  */
 public class OptTypeConstant {
