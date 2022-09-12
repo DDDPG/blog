@@ -228,7 +228,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateUserStatus(UserStatusDTO userStatus) {
+    public void updateUserStatus(StatusDTO userStatus) {
         // 更新用户状态
         User user = User.builder()
                 .id(userStatus.getId())

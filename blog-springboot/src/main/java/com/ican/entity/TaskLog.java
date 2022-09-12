@@ -43,7 +43,7 @@ public class TaskLog {
     private String taskGroup;
 
     /**
-     * 调用目标字符串
+     * 调用目标
      */
     private String invokeTarget;
 

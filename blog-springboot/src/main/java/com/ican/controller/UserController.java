@@ -199,7 +199,7 @@ public class UserController {
     @OptLog(optType = UPDATE)
     @ApiOperation(value = "修改用户状态")
     @PutMapping("/admin/changeStatus")
-    public Result<?> updateUserStatus(@Validated @RequestBody UserStatusDTO userStatus) {
+    public Result<?> updateUserStatus(@Validated @RequestBody StatusDTO userStatus) {
         userService.updateUserStatus(userStatus);
         return Result.success();
     }

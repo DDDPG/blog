@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum JobStatusEnum {
+public enum TaskStatusEnum {
 
     /**
      * 运行

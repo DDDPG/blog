@@ -1,6 +1,6 @@
 package com.ican.strategy.impl;
 
-import com.ican.config.CosConfigProperties;
+import com.ican.config.properties.CosProperties;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -27,11 +27,11 @@ import java.io.InputStream;
 public class CosUploadStrategyImpl extends AbstractUploadStrategyImpl {
 
     @Autowired
-    private CosConfigProperties cosConfigProperties;
+    private CosProperties cosProperties;
 
     @Override
     public Boolean exists(String filePath) {
-        return getCosClient().doesObjectExist(cosConfigProperties.getBucketName(), filePath);
+        return getCosClient().doesObjectExist(cosProperties.getBucketName(), filePath);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class CosUploadStrategyImpl extends AbstractUploadStrategyImpl {
             // 上传的流如果能够获取准确的流长度，则推荐一定填写 content-length
             objectMetadata.setContentLength(inputStream.available());
             // 调用cos方法上传
-            cosClient.putObject(cosConfigProperties.getBucketName(), path + fileName, inputStream, objectMetadata);
+            cosClient.putObject(cosProperties.getBucketName(), path + fileName, inputStream, objectMetadata);
         } catch (CosServiceException e) {
             log.error("Error Message:" + e.getErrorMessage());
             log.error("Error Code:" + e.getErrorCode());
@@ -58,7 +58,7 @@ public class CosUploadStrategyImpl extends AbstractUploadStrategyImpl {
 
     @Override
     public String getFileAccessUrl(String filePath) {
-        return cosConfigProperties.getUrl() + filePath;
+        return cosProperties.getUrl() + filePath;
     }
 
     /**
@@ -68,9 +68,9 @@ public class CosUploadStrategyImpl extends AbstractUploadStrategyImpl {
      */
     private COSClient getCosClient() {
         // 1 初始化用户身份信息（secretId, secretKey）。
-        COSCredentials cred = new BasicCOSCredentials(cosConfigProperties.getSecretId(), cosConfigProperties.getSecretKey());
+        COSCredentials cred = new BasicCOSCredentials(cosProperties.getSecretId(), cosProperties.getSecretKey());
         // 2 设置 bucket 的地域, COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
-        Region region = new Region(cosConfigProperties.getRegion());
+        Region region = new Region(cosProperties.getRegion());
         ClientConfig clientConfig = new ClientConfig(region);
         // 这里建议设置使用 https 协议
         // 从 5.6.54 版本开始，默认使用了 https

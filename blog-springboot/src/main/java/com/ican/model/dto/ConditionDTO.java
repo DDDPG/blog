@@ -75,7 +75,18 @@ public class ConditionDTO {
     private Integer isCheck;
 
     /**
-     * 状态 (1公开 2私密 3草稿)
+     * 文章状态 (1公开 2私密 3草稿)
+     * 任务状态 (0暂停 1运行)
      */
     private Integer status;
+
+    /**
+     * 任务名
+     */
+    private String taskName;
+
+    /**
+     * 任务组名
+     */
+    private String taskGroup;
 }

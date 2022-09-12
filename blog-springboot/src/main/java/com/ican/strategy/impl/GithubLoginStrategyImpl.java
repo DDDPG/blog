@@ -1,7 +1,7 @@
 package com.ican.strategy.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.ican.config.GithubConfigProperties;
+import com.ican.config.properties.GithubProperties;
 import com.ican.enums.LoginTypeEnum;
 import com.ican.exception.ServiceException;
 import com.ican.model.dto.SocialLoginDTO;
@@ -36,7 +36,7 @@ public class GithubLoginStrategyImpl extends AbstractLoginStrategyImpl {
     private RestTemplate restTemplate;
 
     @Autowired
-    private GithubConfigProperties githubConfigProperties;
+    private GithubProperties githubProperties;
 
     @Override
     public SocialTokenVO getSocialToken(String data) {
@@ -56,7 +56,7 @@ public class GithubLoginStrategyImpl extends AbstractLoginStrategyImpl {
         headers.set("Authorization", "token " + socialToken.getAccessToken());
         HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(null, headers);
         // Gitee用户信息
-        GitUserInfoVO gitUserInfoVO = restTemplate.exchange(githubConfigProperties.getUserInfoUrl(),
+        GitUserInfoVO gitUserInfoVO = restTemplate.exchange(githubProperties.getUserInfoUrl(),
                 HttpMethod.GET,
                 requestEntity,
                 GitUserInfoVO.class).getBody();
@@ -77,14 +77,14 @@ public class GithubLoginStrategyImpl extends AbstractLoginStrategyImpl {
         // 根据code换取accessToken
         MultiValueMap<String, String> githubData = new LinkedMultiValueMap<>();
         // Github的Token请求参数
-        githubData.add(CLIENT_ID, githubConfigProperties.getClientId());
-        githubData.add(CLIENT_SECRET, githubConfigProperties.getClientSecret());
-        githubData.add(REDIRECT_URI, githubConfigProperties.getRedirectUrl());
+        githubData.add(CLIENT_ID, githubProperties.getClientId());
+        githubData.add(CLIENT_SECRET, githubProperties.getClientSecret());
+        githubData.add(REDIRECT_URI, githubProperties.getRedirectUrl());
         githubData.add(CODE, githubLogin.getCode());
         githubData.add(STATE, githubLogin.getState());
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(githubData, null);
         try {
-            return restTemplate.exchange(githubConfigProperties.getAccessTokenUrl(),
+            return restTemplate.exchange(githubProperties.getAccessTokenUrl(),
                     HttpMethod.POST,
                     requestEntity,
                     TokenVO.class).getBody();

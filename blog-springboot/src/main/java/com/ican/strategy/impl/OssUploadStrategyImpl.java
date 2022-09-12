@@ -4,7 +4,7 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
-import com.ican.config.OssConfigProperties;
+import com.ican.config.properties.OssProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +21,11 @@ import java.io.InputStream;
 public class OssUploadStrategyImpl extends AbstractUploadStrategyImpl {
 
     @Autowired
-    private OssConfigProperties ossConfigProperties;
+    private OssProperties ossProperties;
 
     @Override
     public Boolean exists(String filePath) {
-        return getOssClient().doesObjectExist(ossConfigProperties.getBucketName(), filePath);
+        return getOssClient().doesObjectExist(ossProperties.getBucketName(), filePath);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class OssUploadStrategyImpl extends AbstractUploadStrategyImpl {
         OSS ossClient = getOssClient();
         try {
             // 调用oss方法上传
-            ossClient.putObject(ossConfigProperties.getBucketName(), path + fileName, inputStream);
+            ossClient.putObject(ossProperties.getBucketName(), path + fileName, inputStream);
         } catch (OSSException oe) {
             log.error("Error Message:" + oe.getErrorMessage());
             log.error("Error Code:" + oe.getErrorCode());
@@ -50,7 +50,7 @@ public class OssUploadStrategyImpl extends AbstractUploadStrategyImpl {
 
     @Override
     public String getFileAccessUrl(String filePath) {
-        return ossConfigProperties.getUrl() + filePath;
+        return ossProperties.getUrl() + filePath;
     }
 
     /**
@@ -59,6 +59,6 @@ public class OssUploadStrategyImpl extends AbstractUploadStrategyImpl {
      * @return {@link OSS} ossClient
      */
     private OSS getOssClient() {
-        return new OSSClientBuilder().build(ossConfigProperties.getEndpoint(), ossConfigProperties.getAccessKeyId(), ossConfigProperties.getAccessKeySecret());
+        return new OSSClientBuilder().build(ossProperties.getEndpoint(), ossProperties.getAccessKeyId(), ossProperties.getAccessKeySecret());
     }
 }

@@ -2,8 +2,8 @@ package com.ican.utils;
 
 import com.ican.constant.ScheduleConstants;
 import com.ican.entity.Task;
-import com.ican.enums.JobStatusEnum;
-import com.ican.exception.TaskException;
+import com.ican.enums.TaskStatusEnum;
+import com.ican.exception.ServiceException;
 import com.ican.quartz.QuartzDisallowConcurrentExecution;
 import com.ican.quartz.QuartzJobExecution;
 import org.quartz.*;
@@ -45,37 +45,40 @@ public class ScheduleUtils {
     /**
      * 创建定时任务
      */
-    public static void createScheduleJob(Scheduler scheduler, Task task) throws SchedulerException, TaskException {
-        Class<? extends Job> jobClass = getQuartzJobClass(task);
-        // 构建task信息
-        Integer taskId = task.getId();
-        String jobGroup = task.getTaskGroup();
-        JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(getJobKey(taskId, jobGroup)).build();
-        // 表达式调度构建器
-        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(task.getCronExpression());
-        cronScheduleBuilder = handleCronScheduleMisfirePolicy(task, cronScheduleBuilder);
-        // 按新的cronExpression表达式构建一个新的trigger
-        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(taskId, jobGroup))
-                .withSchedule(cronScheduleBuilder).build();
-        // 放入参数，运行时的方法可以获取
-        jobDetail.getJobDataMap().put(ScheduleConstants.TASK_PROPERTIES, task);
-        // 判断是否存在
-        if (scheduler.checkExists(getJobKey(taskId, jobGroup))) {
-            // 防止创建时存在数据问题 先移除，然后在执行创建操作
-            scheduler.deleteJob(getJobKey(taskId, jobGroup));
-        }
-        scheduler.scheduleJob(jobDetail, trigger);
-        // 暂停任务
-        if (task.getStatus().equals(JobStatusEnum.PAUSE.getStatus())) {
-            scheduler.pauseJob(ScheduleUtils.getJobKey(taskId, jobGroup));
+    public static void createScheduleJob(Scheduler scheduler, Task task){
+        try {
+            Class<? extends Job> jobClass = getQuartzJobClass(task);
+            // 构建task信息
+            Integer taskId = task.getId();
+            String jobGroup = task.getTaskGroup();
+            JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(getJobKey(taskId, jobGroup)).build();
+            // 表达式调度构建器
+            CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(task.getCronExpression());
+            cronScheduleBuilder = handleCronScheduleMisfirePolicy(task, cronScheduleBuilder);
+            // 按新的cronExpression表达式构建一个新的trigger
+            CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(taskId, jobGroup))
+                    .withSchedule(cronScheduleBuilder).build();
+            // 放入参数，运行时的方法可以获取
+            jobDetail.getJobDataMap().put(ScheduleConstants.TASK_PROPERTIES, task);
+            // 判断是否存在
+            if (scheduler.checkExists(getJobKey(taskId, jobGroup))) {
+                // 防止创建时存在数据问题 先移除，然后在执行创建操作
+                scheduler.deleteJob(getJobKey(taskId, jobGroup));
+            }
+            scheduler.scheduleJob(jobDetail, trigger);
+            // 暂停任务
+            if (task.getStatus().equals(TaskStatusEnum.PAUSE.getStatus())) {
+                scheduler.pauseJob(ScheduleUtils.getJobKey(taskId, jobGroup));
+            }
+        } catch (ServiceException | SchedulerException e) {
+            throw new ServiceException(e.getMessage());
         }
     }
 
     /**
      * 设置定时任务策略
      */
-    public static CronScheduleBuilder handleCronScheduleMisfirePolicy(Task task, CronScheduleBuilder cb)
-            throws TaskException {
+    public static CronScheduleBuilder handleCronScheduleMisfirePolicy(Task task, CronScheduleBuilder cb) throws ServiceException {
         switch (task.getMisfirePolicy()) {
             case ScheduleConstants.MISFIRE_DEFAULT:
                 return cb;
@@ -86,9 +89,8 @@ public class ScheduleUtils {
             case ScheduleConstants.MISFIRE_DO_NOTHING:
                 return cb.withMisfireHandlingInstructionDoNothing();
             default:
-                throw new TaskException("The task misfire policy '" + task.getMisfirePolicy()
-                        + "' cannot be used in cron schedule tasks", TaskException.Code.CONFIG_ERROR);
+                throw new ServiceException("The task misfire policy '" + task.getMisfirePolicy()
+                        + "' cannot be used in cron schedule tasks");
         }
     }
-
 }

@@ -1,46 +1,42 @@
-package com.ican.entity;
+package com.ican.model.dto;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
 
 /**
- * 定时任务
+ * 定时任务DTO
  *
  * @author ican
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Task {
+public class TaskDTO {
 
     /**
      * 任务id
      */
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
      * 任务名称
      */
+    @NotBlank(message = "任务名称不能为空")
     private String taskName;
 
     /**
      * 任务组名
      */
+    @NotBlank(message = "任务组名不能为空")
     private String taskGroup;
 
     /**
      * 调用目标
      */
+    @NotBlank(message = "调用目标不能为空")
     private String invokeTarget;
 
     /**
@@ -67,17 +63,4 @@ public class Task {
      * 任务备注信息
      */
     private String remark;
-
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.UPDATE)
-    private LocalDateTime updateTime;
-
 }

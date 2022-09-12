@@ -16,10 +16,11 @@ public final class ServiceException extends RuntimeException {
      * 返回失败状态码
      */
     private Integer code = FAIL.getCode();
+
     /**
      * 返回信息
      */
-    private String message;
+    private final String message;
 
     public ServiceException(String message) {
         this.message = message;

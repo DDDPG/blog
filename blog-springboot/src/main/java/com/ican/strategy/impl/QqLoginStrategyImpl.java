@@ -1,7 +1,7 @@
 package com.ican.strategy.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.ican.config.QqConfigProperties;
+import com.ican.config.properties.QqProperties;
 import com.ican.enums.LoginTypeEnum;
 import com.ican.exception.ServiceException;
 import com.ican.model.dto.QqLoginDTO;
@@ -29,7 +29,7 @@ import static com.ican.constant.SocialLoginConstant.*;
 public class QqLoginStrategyImpl extends AbstractLoginStrategyImpl {
 
     @Autowired
-    private QqConfigProperties qqConfigProperties;
+    private QqProperties qqProperties;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -53,9 +53,9 @@ public class QqLoginStrategyImpl extends AbstractLoginStrategyImpl {
         Map<String, String> formData = new HashMap<>(3);
         formData.put(QQ_OPEN_ID, socialToken.getOpenId());
         formData.put(ACCESS_TOKEN, socialToken.getAccessToken());
-        formData.put(OAUTH_CONSUMER_KEY, qqConfigProperties.getAppId());
+        formData.put(OAUTH_CONSUMER_KEY, qqProperties.getAppId());
         // 获取QQ返回的用户信息
-        QqUserInfoVO qqUserInfo = JSON.parseObject(restTemplate.getForObject(qqConfigProperties.getUserInfoUrl(), String.class, formData), QqUserInfoVO.class);
+        QqUserInfoVO qqUserInfo = JSON.parseObject(restTemplate.getForObject(qqProperties.getUserInfoUrl(), String.class, formData), QqUserInfoVO.class);
         // 返回用户信息
         return SocialUserInfoVO.builder()
                 .nickname(Objects.requireNonNull(qqUserInfo).getNickname())
@@ -73,7 +73,7 @@ public class QqLoginStrategyImpl extends AbstractLoginStrategyImpl {
         Map<String, String> qqData = new HashMap<>(1);
         qqData.put(ACCESS_TOKEN, qqLogin.getAccessToken());
         try {
-            String result = restTemplate.getForObject(qqConfigProperties.getCheckTokenUrl(), String.class, qqData);
+            String result = restTemplate.getForObject(qqProperties.getCheckTokenUrl(), String.class, qqData);
             QqTokenVO qqTokenVO = JSON.parseObject(CommonUtils.getBracketsContent(Objects.requireNonNull(result)), QqTokenVO.class);
             // 判断openId是否一致
             if (!qqLogin.getOpenId().equals(qqTokenVO.getOpenid())) {

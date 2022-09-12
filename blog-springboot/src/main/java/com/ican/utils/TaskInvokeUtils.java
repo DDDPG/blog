@@ -56,7 +56,7 @@ public class TaskInvokeUtils {
     /**
      * 校验是否为为class包名
      *
-     * @param invokeTarget 名称
+     * @param invokeTarget 调用目标
      * @return true是 false否
      */
     public static boolean isValidClassName(String invokeTarget) {
@@ -66,7 +66,7 @@ public class TaskInvokeUtils {
     /**
      * 获取bean名称
      *
-     * @param invokeTarget 目标字符串
+     * @param invokeTarget 调用目标
      * @return bean名称
      */
     public static String getBeanName(String invokeTarget) {
@@ -77,7 +77,7 @@ public class TaskInvokeUtils {
     /**
      * 获取bean方法
      *
-     * @param invokeTarget 目标字符串
+     * @param invokeTarget 调用目标
      * @return method方法
      */
     public static String getMethodName(String invokeTarget) {
@@ -88,7 +88,7 @@ public class TaskInvokeUtils {
     /**
      * 获取method方法参数相关列表
      *
-     * @param invokeTarget 目标字符串
+     * @param invokeTarget 调用目标
      * @return method方法相关参数列表
      */
     public static List<Object[]> getMethodParams(String invokeTarget) {

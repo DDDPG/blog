@@ -1,7 +1,7 @@
 package com.ican.strategy.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.ican.config.GiteeConfigProperties;
+import com.ican.config.properties.GiteeProperties;
 import com.ican.enums.LoginTypeEnum;
 import com.ican.exception.ServiceException;
 import com.ican.model.dto.SocialLoginDTO;
@@ -32,7 +32,7 @@ public class GiteeLoginStrategyImpl extends AbstractLoginStrategyImpl {
     private RestTemplate restTemplate;
 
     @Autowired
-    private GiteeConfigProperties giteeConfigProperties;
+    private GiteeProperties giteeProperties;
 
     @Override
     public SocialTokenVO getSocialToken(String data) {
@@ -52,7 +52,7 @@ public class GiteeLoginStrategyImpl extends AbstractLoginStrategyImpl {
         // 请求参数
         dataMap.put(ACCESS_TOKEN, socialToken.getAccessToken());
         // Gitee用户信息
-        GitUserInfoVO gitUserInfoVO = restTemplate.getForObject(giteeConfigProperties.getUserInfoUrl(), GitUserInfoVO.class, dataMap);
+        GitUserInfoVO gitUserInfoVO = restTemplate.getForObject(giteeProperties.getUserInfoUrl(), GitUserInfoVO.class, dataMap);
         // 返回用户信息
         return SocialUserInfoVO.builder()
                 .avatar(Objects.requireNonNull(gitUserInfoVO).getAvatar_url())
@@ -70,15 +70,15 @@ public class GiteeLoginStrategyImpl extends AbstractLoginStrategyImpl {
         // 根据code换取accessToken
         MultiValueMap<String, String> giteeData = new LinkedMultiValueMap<>();
         // Gitee的Token请求参数
-        giteeData.add(CLIENT_ID, giteeConfigProperties.getClientId());
-        giteeData.add(CLIENT_SECRET, giteeConfigProperties.getClientSecret());
-        giteeData.add(GRANT_TYPE, giteeConfigProperties.getGrantType());
-        giteeData.add(REDIRECT_URI, giteeConfigProperties.getRedirectUrl());
+        giteeData.add(CLIENT_ID, giteeProperties.getClientId());
+        giteeData.add(CLIENT_SECRET, giteeProperties.getClientSecret());
+        giteeData.add(GRANT_TYPE, giteeProperties.getGrantType());
+        giteeData.add(REDIRECT_URI, giteeProperties.getRedirectUrl());
         giteeData.add(CODE, giteeLogin.getCode());
         giteeData.add(STATE, giteeLogin.getState());
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(giteeData, null);
         try {
-            return restTemplate.exchange(giteeConfigProperties.getAccessTokenUrl(), HttpMethod.POST, requestEntity, TokenVO.class).getBody();
+            return restTemplate.exchange(giteeProperties.getAccessTokenUrl(), HttpMethod.POST, requestEntity, TokenVO.class).getBody();
         } catch (Exception e) {
             throw new ServiceException("Gitee登录错误");
         }

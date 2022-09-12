@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 
 /**
- * 用户状态
+ * 状态DTO
  *
  * @author ican
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserStatusDTO {
+public class StatusDTO {
     /**
      * 用户id
      */

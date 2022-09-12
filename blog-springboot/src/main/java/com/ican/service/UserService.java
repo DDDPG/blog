@@ -85,7 +85,7 @@ public interface UserService extends IService<User> {
      *
      * @param userStatus 用户禁用信息
      */
-    void updateUserStatus(UserStatusDTO userStatus);
+    void updateUserStatus(StatusDTO userStatus);
 
     /**
      * 查看后台用户列表
