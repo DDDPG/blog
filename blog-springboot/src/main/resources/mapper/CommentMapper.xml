@@ -146,6 +146,7 @@
         <foreach open="(" collection="typeIdList" item="typeId" separator="," close=")">
             #{typeId}
         </foreach>
+        AND comment_type=#{commentType}
         GROUP BY
         type_id
     </select>

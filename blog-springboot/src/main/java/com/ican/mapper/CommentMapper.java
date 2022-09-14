@@ -92,10 +92,11 @@ public interface CommentMapper extends BaseMapper<Comment> {
     /**
      * 根据评论类型id获取评论量
      *
-     * @param typeIdList 类型id列表
+     * @param typeIdList  类型id列表
+     * @param commentType 评论类型
      * @return {@link List<CommentCountVO>}说说评论量
      */
-    List<CommentCountVO> selectCommentCountByTypeId(@Param("typeIdList") List<Integer> typeIdList);
+    List<CommentCountVO> selectCommentCountByTypeId(@Param("typeIdList") List<Integer> typeIdList, @Param("commentType") Integer commentType);
 
     /**
      * 查询最新评论

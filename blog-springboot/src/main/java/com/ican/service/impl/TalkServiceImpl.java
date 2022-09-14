@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ican.entity.Talk;
+import com.ican.enums.CommentTypeEnum;
 import com.ican.exception.ServiceException;
 import com.ican.mapper.CommentMapper;
 import com.ican.mapper.TalkMapper;
@@ -174,7 +175,7 @@ public class TalkServiceImpl extends ServiceImpl<TalkMapper, Talk> implements Ta
         List<Integer> talkIdList = talkVOList.stream()
                 .map(TalkVO::getId)
                 .collect(Collectors.toList());
-        List<CommentCountVO> commentCountVOList = commentMapper.selectCommentCountByTypeId(talkIdList);
+        List<CommentCountVO> commentCountVOList = commentMapper.selectCommentCountByTypeId(talkIdList, TALK.getType());
         Map<Integer, Integer> commentCountMap = commentCountVOList.stream()
                 .collect(Collectors.toMap(CommentCountVO::getId, CommentCountVO::getCommentCount));
         // 查询说说点赞量
