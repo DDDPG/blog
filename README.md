@@ -11,7 +11,7 @@
    基于Springboot + Vue 开发的前后端分离博客
 </p>
 <p align="center">
-   <a target="_blank" href="https://gitee.com/wu_shengdong/blog">
+   <a target="_blank" href="https://github.com/ICAN1999/blog">
       <img src="https://img.shields.io/hexpm/l/plug.svg"/>
       <img src="https://img.shields.io/badge/JDK-1.8+-green.svg"/>
       <img src="https://img.shields.io/badge/springboot-2.4.0-green"/>
