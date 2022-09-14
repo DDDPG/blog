@@ -28,17 +28,6 @@
     </div>
     <!--历史标签-->
     <div class="tabs-container">
-      <!-- <el-tag
-        v-for="tag in $store.getters.tabList"
-        :key="tag.path"
-        :closable="tag.name !== '首页'"
-        :effect="$route.path === tag.path ? 'dark' : 'plain'"
-        @click="changeMenu(tag)"
-        @close="handleClose(tag)"
-        disable-transitions
-      >
-        {{ tag.name }}
-      </el-tag> -->
       <div class="tabs-wrapper">
         <el-tag
         v-for="tag in $store.getters.tabList"

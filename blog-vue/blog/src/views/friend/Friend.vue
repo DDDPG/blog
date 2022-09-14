@@ -50,6 +50,11 @@
 </template>
 
 <script>
+POWERMODE.colorful = true;
+POWERMODE.shake = false;
+document.body.addEventListener("input", POWERMODE);
+</script>
+<script>
 import { getFriends } from "@/api/friend";
 import Comment from "../../components/Comment";
 export default {

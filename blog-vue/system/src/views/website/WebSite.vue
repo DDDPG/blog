@@ -95,7 +95,7 @@
                 size="small"
                 style="width: 400px; margin-right: 1rem"
               ></el-input>
-              <el-checkbox label="qq">是否展示</el-checkbox>
+              <el-checkbox label="bilibili">是否展示</el-checkbox>
             </el-form-item>
             <el-form-item label="QQ">
               <el-input
@@ -284,7 +284,7 @@ export default {
       this.websiteConfigForm.authorAvatar = response.data;
     },
     handleUserAvatarSuccess(response) {
-      this.websiteConfigForm.authorAvatar = response.data;
+      this.websiteConfigForm.userAvatar = response.data;
     },
     handleTouristAvatarSuccess(response) {
       this.websiteConfigForm.touristAvatar = response.data;

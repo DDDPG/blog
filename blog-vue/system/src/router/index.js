@@ -99,7 +99,7 @@ const routes = [
     name: "消息管理",
     icon: "el-icon-chat-dot-round",
     component: Layout,
-    redirect: "/messages",
+    redirect: "/message",
     children: [
       {
         path: "/message",
@@ -120,7 +120,7 @@ const routes = [
     name: "说说管理",
     icon: "el-icon-chat-dot-square",
     component: Layout,
-    redirect: "/talk",
+    redirect: "/talks",
     children: [
       {
         path: "/talks",

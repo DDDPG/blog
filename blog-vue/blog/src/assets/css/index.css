@@ -159,8 +159,6 @@ pre.hljs code {
 }
 
 /* 首页文章卡片 */
-.cards .item.show,
-.segments > .item.show,
 body.loaded #main .wrap,
 body.loaded #sidebar .panel.active {
   -webkit-animation: slideUpBigIn 0.5s;

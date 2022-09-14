@@ -20,7 +20,6 @@
     <MusicPlayer v-if="isMusicPlayer"></MusicPlayer>
   </div>
 </template>
-
 <script>
 import Header from "./components/layout/Header.vue";
 import SideBar from "./components/layout/SideBar.vue";
