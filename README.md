@@ -80,7 +80,7 @@ blog-springboot
 - 前台参考"Hexo"的"Shoka"设计，响应式体验好。
 - 后台参考"element-admin"设计，侧边栏，历史标签，面包屑自动生成。
 - 采用Markdown编辑器，写法简单。
-- 添加点赞，取消点赞功能。
+- 点赞，取消点赞功能。
 - 评论支持表情输入回复等，样式参考B站评论区。
 - 邮件模板评论回复提醒，页面美观。
 - 添加音乐播放器，在线听音乐。
@@ -158,7 +158,7 @@ blog-springboot
 
 自己花了大概三个多月的时间写完这个项目，经历各种Bug以及项目部署，总得来说太不容易了。在这里十分感谢以下项目：
 
-[X1192176811 (风丶宇) ](https://github.com/X1192176811)
+[X1192176811 (风丶宇) ](https://github.com/X1192176811/blog)
 
 **[hexo-theme-shoka](https://github.com/amehime/hexo-theme-shoka)**
 
