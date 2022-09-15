@@ -41,6 +41,7 @@ public class OperationLogServiceImpl extends ServiceImpl<OperationLogMapper, Ope
         // 查询操作日志数量
         Integer count = operationLogMapper.selectCount(new LambdaQueryWrapper<OperationLog>()
                 .like(StringUtils.hasText(condition.getOptModule()), OperationLog::getModule, condition.getOptModule())
+                .or()
                 .like(StringUtils.hasText(condition.getKeyword()), OperationLog::getDescription, condition.getKeyword())
         );
         if (count == 0) {
