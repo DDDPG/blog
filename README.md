@@ -36,7 +36,8 @@
 
 **Gitee地址：** [https://gitee.com/wu_shengdong/blog](https://gitee.com/wu_shengdong/blog)
 
-在博客前台创建账号后登录后，可以直接进去后台管理查看。
+在博客界面用邮箱或第三方登录后，点击前往后台直接进入博客后台管理查看。
+
 如果您觉得我写得不错的话，就给我个star吧，您的star就是对我的最大的鼓励。
 
 ## 目录结构
