@@ -27,7 +27,7 @@
         u.avatar,
         u.nickname AS from_nickname,
         r.nickname AS to_nickname,
-        a.article_title,
+        IF(c.comment_type=1,a.article_title,null) AS article_title,
         c.parent_id IS NULL AS is_parent,
         c.comment_content,
         c.comment_type,
@@ -142,11 +142,11 @@
         FROM
         t_comment
         WHERE
-        type_id IN
+        comment_type=#{commentType}
+        AND type_id IN
         <foreach open="(" collection="typeIdList" item="typeId" separator="," close=")">
             #{typeId}
         </foreach>
-        AND comment_type=#{commentType}
         GROUP BY
         type_id
     </select>

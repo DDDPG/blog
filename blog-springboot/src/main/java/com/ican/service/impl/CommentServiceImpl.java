@@ -78,8 +78,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             return new PageResult<>();
         }
         // 查询后台评论集合
-        List<CommentBackVO> commentBackDTOList = commentMapper.listCommentBackVO(PageUtils.getLimit(), PageUtils.getSize(), condition);
-        return new PageResult<>(commentBackDTOList, count);
+        List<CommentBackVO> commentBackVOList = commentMapper.listCommentBackVO(PageUtils.getLimit(), PageUtils.getSize(), condition);
+        return new PageResult<>(commentBackVOList, count);
     }
 
     @Override

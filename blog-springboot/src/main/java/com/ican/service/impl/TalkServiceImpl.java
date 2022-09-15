@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ican.entity.Talk;
-import com.ican.enums.CommentTypeEnum;
 import com.ican.exception.ServiceException;
 import com.ican.mapper.CommentMapper;
 import com.ican.mapper.TalkMapper;
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -116,15 +114,14 @@ public class TalkServiceImpl extends ServiceImpl<TalkMapper, Talk> implements Ta
 
     @Override
     public PageResult<TalkBackVO> listTalkBackVO(ConditionDTO condition) {
-        List<TalkBackVO> talkBackVOList = new ArrayList<>();
         // 查询说说总量
         Integer count = talkMapper.selectCount(new LambdaQueryWrapper<Talk>()
                 .eq(Objects.nonNull(condition.getStatus()), Talk::getStatus, condition.getStatus()));
         if (count == 0) {
-            return new PageResult<>(talkBackVOList, count);
+            return new PageResult<>();
         }
         // 分页查询说说
-        talkBackVOList = talkMapper.selectTalkBackList(PageUtils.getLimit(), PageUtils.getSize(), condition);
+        List<TalkBackVO> talkBackVOList = talkMapper.selectTalkBackList(PageUtils.getLimit(), PageUtils.getSize(), condition);
         talkBackVOList.forEach(item -> {
             // 转换图片格式
             if (Objects.nonNull(item.getImages())) {
@@ -162,15 +159,14 @@ public class TalkServiceImpl extends ServiceImpl<TalkMapper, Talk> implements Ta
 
     @Override
     public PageResult<TalkVO> listTalkVO() {
-        List<TalkVO> talkVOList = new ArrayList<>();
         // 查询说说总量
         Integer count = talkMapper.selectCount((new LambdaQueryWrapper<Talk>()
                 .eq(Talk::getStatus, PUBLIC.getStatus()).eq(Talk::getIsTime, FALSE)));
         if (count == 0) {
-            return new PageResult<>(talkVOList, count);
+            return new PageResult<>();
         }
         // 分页查询说说
-        talkVOList = talkMapper.selectTalkList(PageUtils.getLimit(), PageUtils.getSize());
+        List<TalkVO> talkVOList = talkMapper.selectTalkList(PageUtils.getLimit(), PageUtils.getSize());
         // 查询说说评论量
         List<Integer> talkIdList = talkVOList.stream()
                 .map(TalkVO::getId)
