@@ -174,4 +174,4 @@ blog-springboot
 
 ## 交流群
 
-![博客技术交流群聊二维码.png](https://static.talkxj.com/articles/1594437310326.png)
+![博客技术交流群聊二维码.png](https://static.ttkwsd.top/config/blogCommunication.jpg)
