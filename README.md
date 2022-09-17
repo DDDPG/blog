@@ -171,7 +171,3 @@ blog-springboot
 [基于Vue.js的弹幕交互组件 | A danmaku component for Vue](https://github.com/hellodigua/vue-danmaku)
 
 感谢以上大佬们的开源精神💖，提供这么优秀的项目🌹
-
-## 交流群
-
-![博客技术交流群聊二维码.png](https://static.ttkwsd.top/config/blogCommunication.jpg)
