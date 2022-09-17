@@ -18,6 +18,7 @@ import com.ican.utils.BeanCopyUtils;
 import com.ican.utils.CronUtils;
 import com.ican.utils.PageUtils;
 import com.ican.utils.ScheduleUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.JobDataMap;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,15 +64,23 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         if (count == 0) {
             return new PageResult<>();
         }
-        // 分页查询分类列表
+        // 分页查询定时任务列表
         List<TaskBackVO> taskBackVOList = taskMapper.selectTaskBackVO(PageUtils.getLimit(), PageUtils.getSize(), condition);
+        taskBackVOList.forEach(item -> {
+            if (StringUtils.isNotEmpty(item.getCronExpression())) {
+                Date nextExecution = CronUtils.getNextExecution(item.getCronExpression());
+                item.setNextValidTime(nextExecution);
+            } else {
+                item.setNextValidTime(null);
+            }
+        });
         return new PageResult<>(taskBackVOList, count);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveTask(TaskDTO task) {
-        if (CronUtils.isValid(task.getCronExpression())) {
+        if (!CronUtils.isValid(task.getCronExpression())) {
             throw new ServiceException("Cron表达式无效!");
         }
         Task newTask = BeanCopyUtils.copyBean(task, Task.class);
@@ -85,7 +95,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateTask(TaskDTO task) {
-        if (CronUtils.isValid(task.getCronExpression())) {
+        if (!CronUtils.isValid(task.getCronExpression())) {
             throw new ServiceException("Cron表达式无效!");
         }
         Task existTask = taskMapper.selectById(task.getId());
@@ -171,17 +181,17 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
     /**
      * 更新任务
      *
-     * @param job      任务对象
-     * @param jobGroup 任务组名
+     * @param task      任务对象
+     * @param taskGroup 任务组名
      */
-    public void updateSchedulerJob(Task job, String jobGroup) throws SchedulerException {
-        Integer taskId = job.getId();
+    public void updateSchedulerJob(Task task, String taskGroup) throws SchedulerException {
+        Integer taskId = task.getId();
         // 判断是否存在
-        JobKey jobKey = ScheduleUtils.getJobKey(taskId, jobGroup);
+        JobKey jobKey = ScheduleUtils.getJobKey(taskId, taskGroup);
         if (scheduler.checkExists(jobKey)) {
             // 防止创建时存在数据问题 先移除，然后在执行创建操作
             scheduler.deleteJob(jobKey);
         }
-        ScheduleUtils.createScheduleJob(scheduler, job);
+        ScheduleUtils.createScheduleJob(scheduler, task);
     }
 }

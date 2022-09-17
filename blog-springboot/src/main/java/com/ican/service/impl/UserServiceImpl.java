@@ -21,8 +21,6 @@ import com.ican.strategy.context.UploadStrategyContext;
 import com.ican.utils.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -302,34 +300,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!code.equals(sysCode)) {
             throw new ServiceException("验证码错误，请重新输入！");
         }
-    }
-
-    /**
-     * 每天凌晨零点执行
-     * 统计用户地区
-     */
-    @Scheduled(cron = "0 0 * * * ?")
-    public void statisticalUserZone() {
-        // 查询用户登录记录
-        List<Visitor> visitorList = visitorMapper.selectList(new LambdaQueryWrapper<Visitor>()
-                .select(Visitor::getIpSource));
-        // 统计用户区域分布
-        Map<String, Long> userZoneMap = visitorList.stream()
-                .map(item -> {
-                    if (StringUtils.hasText(item.getIpSource())) {
-                        return item.getIpSource().split("\\|")[1].replaceAll(PROVINCE, "");
-                    }
-                    return UNKNOWN;
-                })
-                .collect(Collectors.groupingBy(item -> item, Collectors.counting()));
-        // 转换格式
-        List<UserZoneVO> userZoneList = userZoneMap.entrySet().stream()
-                .map(item -> UserZoneVO.builder()
-                        .name(item.getKey())
-                        .value(item.getValue())
-                        .build())
-                .collect(Collectors.toList());
-        redisService.setObject(USER_ZONE, JSON.toJSONString(userZoneList));
     }
 
 }

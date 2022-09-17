@@ -31,15 +31,15 @@ public class ScheduleUtils {
     /**
      * 构建任务触发对象
      */
-    public static TriggerKey getTriggerKey(Integer jobId, String jobGroup) {
-        return TriggerKey.triggerKey(ScheduleConstants.TASK_CLASS_NAME + jobId, jobGroup);
+    public static TriggerKey getTriggerKey(Integer taskId, String taskGroup) {
+        return TriggerKey.triggerKey(ScheduleConstants.TASK_CLASS_NAME + taskId, taskGroup);
     }
 
     /**
      * 构建任务键对象
      */
-    public static JobKey getJobKey(Integer jobId, String jobGroup) {
-        return JobKey.jobKey(ScheduleConstants.TASK_CLASS_NAME + jobId, jobGroup);
+    public static JobKey getJobKey(Integer taskId, String taskGroup) {
+        return JobKey.jobKey(ScheduleConstants.TASK_CLASS_NAME + taskId, taskGroup);
     }
 
     /**
@@ -50,25 +50,25 @@ public class ScheduleUtils {
             Class<? extends Job> jobClass = getQuartzJobClass(task);
             // 构建task信息
             Integer taskId = task.getId();
-            String jobGroup = task.getTaskGroup();
-            JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(getJobKey(taskId, jobGroup)).build();
+            String taskGroup = task.getTaskGroup();
+            JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(getJobKey(taskId, taskGroup)).build();
             // 表达式调度构建器
             CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(task.getCronExpression());
             cronScheduleBuilder = handleCronScheduleMisfirePolicy(task, cronScheduleBuilder);
             // 按新的cronExpression表达式构建一个新的trigger
-            CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(taskId, jobGroup))
+            CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(taskId, taskGroup))
                     .withSchedule(cronScheduleBuilder).build();
             // 放入参数，运行时的方法可以获取
             jobDetail.getJobDataMap().put(ScheduleConstants.TASK_PROPERTIES, task);
             // 判断是否存在
-            if (scheduler.checkExists(getJobKey(taskId, jobGroup))) {
+            if (scheduler.checkExists(getJobKey(taskId, taskGroup))) {
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
-                scheduler.deleteJob(getJobKey(taskId, jobGroup));
+                scheduler.deleteJob(getJobKey(taskId, taskGroup));
             }
             scheduler.scheduleJob(jobDetail, trigger);
             // 暂停任务
             if (task.getStatus().equals(TaskStatusEnum.PAUSE.getStatus())) {
-                scheduler.pauseJob(ScheduleUtils.getJobKey(taskId, jobGroup));
+                scheduler.pauseJob(ScheduleUtils.getJobKey(taskId, taskGroup));
             }
         } catch (ServiceException | SchedulerException e) {
             throw new ServiceException(e.getMessage());

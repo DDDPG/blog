@@ -34,4 +34,5 @@ public interface TaskLogMapper extends BaseMapper<TaskLog> {
      * @return 定时任务日志列表
      */
     List<TaskLogVO> selectTaskLogVOList(@Param("limit") Long limit, @Param("size") Long size, @Param("condition") ConditionDTO condition);
+
 }

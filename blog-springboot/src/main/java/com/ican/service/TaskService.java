@@ -60,4 +60,5 @@ public interface TaskService extends IService<Task> {
      * @param taskRun 定时任务
      */
     void runTask(TaskRunDTO taskRun);
+
 }

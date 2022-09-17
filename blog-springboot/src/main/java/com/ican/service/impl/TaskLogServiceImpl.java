@@ -40,4 +40,5 @@ public class TaskLogServiceImpl extends ServiceImpl<TaskLogMapper, TaskLog> impl
     public void cleanTaskLog() {
         taskLogMapper.delete(null);
     }
+
 }

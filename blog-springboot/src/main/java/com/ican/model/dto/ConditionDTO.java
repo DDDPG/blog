@@ -81,11 +81,6 @@ public class ConditionDTO {
     private Integer status;
 
     /**
-     * 任务名
-     */
-    private String taskName;
-
-    /**
      * 任务组名
      */
     private String taskGroup;
@@ -95,13 +90,4 @@ public class ConditionDTO {
      */
     private String invokeTarget;
 
-    /**
-     * 开始时间
-     */
-    private String startTime;
-
-    /**
-     * 结束时间
-     */
-    private String endTime;
 }

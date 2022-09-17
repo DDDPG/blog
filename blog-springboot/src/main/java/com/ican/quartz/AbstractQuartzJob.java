@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
 import static com.ican.constant.CommonConstant.FALSE;
-import static jdk.nashorn.tools.Shell.SUCCESS;
+import static com.ican.constant.CommonConstant.TRUE;
 
 /**
  * 抽象quartz调用
@@ -51,7 +51,7 @@ public abstract class AbstractQuartzJob implements Job {
      * 执行前
      *
      * @param context 工作执行上下文对象
-     * @param task     系统计划任务
+     * @param task    系统计划任务
      */
     protected void before(JobExecutionContext context, Task task) {
         threadLocal.set(new Date());
@@ -61,7 +61,7 @@ public abstract class AbstractQuartzJob implements Job {
      * 执行后
      *
      * @param context 工作执行上下文对象
-     * @param task     系统计划任务
+     * @param task    系统计划任务
      */
     protected void after(JobExecutionContext context, Task task, Exception e) {
         Date startTime = threadLocal.get();
@@ -77,7 +77,7 @@ public abstract class AbstractQuartzJob implements Job {
             String errorMsg = StringUtils.substring(ExceptionUtils.getExceptionMessage(e), 0, 2000);
             taskLog.setErrorInfo(errorMsg);
         } else {
-            taskLog.setStatus(SUCCESS);
+            taskLog.setStatus(TRUE);
         }
         // 写入数据库当中
         SpringUtils.getBean(TaskLogMapper.class).insert(taskLog);
@@ -87,7 +87,7 @@ public abstract class AbstractQuartzJob implements Job {
      * 执行方法，由子类重载
      *
      * @param context 工作执行上下文对象
-     * @param task     系统计划任务
+     * @param task    系统计划任务
      * @throws Exception 执行过程中的异常
      */
     protected abstract void doExecute(JobExecutionContext context, Task task) throws Exception;

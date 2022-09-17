@@ -34,4 +34,5 @@ public interface TaskMapper extends BaseMapper<Task> {
      * @return 后台定时任务列表
      */
     List<TaskBackVO> selectTaskBackVO(@Param("limit") Long limit, @Param("size") Long size, @Param("condition") ConditionDTO condition);
+
 }

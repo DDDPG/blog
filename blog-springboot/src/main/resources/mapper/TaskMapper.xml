@@ -7,14 +7,14 @@
         select count(1)
         from t_task
         <where>
-            <if test="condition.taskName!=null">
-                and task_name like concat('%',#{condition.taskName},'%')
+            <if test="condition.keyword!=null">
+                and task_name like concat('%',#{condition.keyword},'%')
+            </if>
+            <if test="condition.status!=null">
+                and status = #{condition.status}
             </if>
             <if test="condition.taskGroup!=null">
-                and task_group = #{condition.taskGroup}
-            </if>
-            <if test="jobSearchVO.status!=null">
-                and status = #{condition.status}
+                and task_group like concat('%',#{condition.taskGroup},'%')
             </if>
         </where>
     </select>
@@ -23,17 +23,18 @@
         select id,task_name,task_group,invoke_target,cron_expression,misfire_policy,concurrent,status,remark,create_time
         from t_task
         <where>
-            <if test="condition.jobName!=null">
-                and task_name like concat('%',#{condition.taskName},'%')
-            </if>
-            <if test="condition.jobGroup!=null">
-                and task_group = #{condition.taskGroup}
+            <if test="condition.keyword!=null">
+                and task_name like concat('%',#{condition.keyword},'%')
             </if>
             <if test="condition.status!=null">
                 and status = #{condition.status}
+            </if>
+            <if test="condition.taskGroup!=null">
+                and task_group like concat('%',#{condition.taskGroup},'%')
             </if>
         </where>
         ORDER BY status DESC
         LIMIT #{limit},#{size}
     </select>
+
 </mapper>

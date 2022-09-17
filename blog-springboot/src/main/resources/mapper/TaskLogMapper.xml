@@ -6,23 +6,14 @@
     <select id="selectTaskLogCount" resultType="java.lang.Integer">
         SELECT COUNT(1) from t_task_log
         <where>
-            <if test="condition.taskName != null">
-                AND task_name like concat('%', #{condition.taskName}, '%')
+            <if test="condition.keyword != null">
+                AND task_name like concat('%', #{condition.keyword}, '%')
             </if>
             <if test="condition.taskGroup != null">
-                AND task_group = #{condition.taskGroup}
+                AND task_group like concat('%', #{condition.taskGroup}, '%')
             </if>
             <if test="condition.status != null">
                 AND status = #{condition.status}
-            </if>
-            <if test="condition.invokeTarget != null">
-                AND invoke_target like concat('%', #{condition.invokeTarget}, '%')
-            </if>
-            <if test="condition.startTime != null">
-                and date_format(create_time,'%y%m%d') &gt;= date_format(#{condition.startTime},'%y%m%d')
-            </if>
-            <if test="condition.endTime != null">
-                and date_format(create_time,'%y%m%d') &lt;= date_format(#{condition.endTime},'%y%m%d')
             </if>
         </where>
     </select>
@@ -30,23 +21,14 @@
     <select id="selectTaskLogVOList" resultType="com.ican.model.vo.TaskLogVO">
         SELECT * from t_task_log
         <where>
-            <if test="condition.taskName != null">
-                AND task_name like concat('%', #{condition.taskName}, '%')
+            <if test="condition.keyword != null">
+                AND task_name like concat('%', #{condition.keyword}, '%')
             </if>
             <if test="condition.taskGroup != null">
-                AND task_group = #{condition.taskGroup}
+                AND task_group like concat('%', #{condition.taskGroup}, '%')
             </if>
             <if test="condition.status != null">
                 AND status = #{condition.status}
-            </if>
-            <if test="condition.invokeTarget != null">
-                AND invoke_target like concat('%', #{condition.invokeTarget}, '%')
-            </if>
-            <if test="condition.startTime != null">
-                and date_format(create_time,'%y%m%d') &gt;= date_format(#{condition.startTime},'%y%m%d')
-            </if>
-            <if test="condition.endTime != null">
-                and date_format(create_time,'%y%m%d') &lt;= date_format(#{condition.endTime},'%y%m%d')
             </if>
         </where>
         ORDER BY create_time

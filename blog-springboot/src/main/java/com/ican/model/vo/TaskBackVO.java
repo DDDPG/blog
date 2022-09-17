@@ -1,14 +1,11 @@
 package com.ican.model.vo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 定时任务后台VO
@@ -64,6 +61,11 @@ public class TaskBackVO {
      * 任务备注信息
      */
     private String remark;
+
+    /**
+     * 下次执行时间
+     */
+    private Date nextValidTime;
 
     /**
      * 创建时间

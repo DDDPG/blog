@@ -105,9 +105,10 @@ public class TaskController {
      * @return {@link Result<>}
      */
     @ApiOperation("定时任务立即执行一次")
-    @PutMapping("/admin/tasks/run")
+    @PostMapping("/admin/tasks/run")
     public Result<?> runTask(@RequestBody TaskRunDTO taskRun) {
         taskService.runTask(taskRun);
         return Result.success();
     }
+
 }
