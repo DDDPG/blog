@@ -71,8 +71,11 @@ public class TokenServiceImpl implements TokenService {
      */
     @Override
     public String createToken(LoginUser loginUser) {
+        // 设置用户登录时间
+        LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(SHANGHAI.getZone()));
+        loginUser.setLoginTime(currentTime);
         setUserAgent(loginUser);
-        refreshToken(loginUser);
+        refreshToken(currentTime, loginUser);
         recordVisitor(loginUser);
         String userId = loginUser.getId().toString();
         return createToken(userId);
@@ -130,6 +133,7 @@ public class TokenServiceImpl implements TokenService {
         loginUser.setIpSource(IpUtils.getCityInfo(ip));
         loginUser.setBrowser(userAgentMap.get("browser"));
         loginUser.setOs(userAgentMap.get("os"));
+        loginUser.setLoginTime(LocalDateTime.now(ZoneId.of(SHANGHAI.getZone())));
     }
 
     /**
@@ -162,7 +166,7 @@ public class TokenServiceImpl implements TokenService {
         LocalDateTime expireTime = loginUser.getExpireTime();
         LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(SHANGHAI.getZone()));
         if (Duration.between(currentTime, expireTime).toMinutes() <= TWENTY_MINUTES) {
-            refreshToken(loginUser);
+            refreshToken(currentTime, loginUser);
         }
     }
 
@@ -172,9 +176,9 @@ public class TokenServiceImpl implements TokenService {
      * @param loginUser 登录信息
      */
     @Override
-    public void refreshToken(LoginUser loginUser) {
-        loginUser.setLoginTime(LocalDateTime.now(ZoneId.of(SHANGHAI.getZone())));
-        loginUser.setExpireTime(loginUser.getLoginTime().plusMinutes(expireTime));
+    public void refreshToken(LocalDateTime currentTime, LoginUser loginUser) {
+        // 设置有效期
+        loginUser.setExpireTime(currentTime.plusMinutes(expireTime));
         String userId = loginUser.getId().toString();
         redisService.setObject(LOGIN_KEY + userId, loginUser, expireTime, TimeUnit.MINUTES);
     }

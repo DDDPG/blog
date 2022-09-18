@@ -4,6 +4,7 @@ import com.ican.model.dto.LoginUser;
 import io.jsonwebtoken.Claims;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 /**
  * Token业务接口
@@ -62,9 +63,10 @@ public interface TokenService {
     /**
      * 刷新token有效期
      *
-     * @param loginUser 登录信息
+     * @param currentTime 当前时间
+     * @param loginUser   登录信息
      */
-    void refreshToken(LoginUser loginUser);
+    void refreshToken(LocalDateTime currentTime, LoginUser loginUser);
 
     /**
      * 记录用户登录信息
