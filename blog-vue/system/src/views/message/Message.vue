@@ -129,7 +129,7 @@
 </template>
 
 <script>
-import { getMessages,updateMessageCheck,deleteMessage } from "@/api/message";
+import { getMessages, updateMessageCheck, deleteMessage } from "@/api/message";
 export default {
   name: "Message",
   data() {
@@ -161,7 +161,13 @@ export default {
       this.getMessageList();
     },
     getMessageList() {
-      getMessages(this.currentPage, this.pageSize, this.keyword, this.isCheck).then(({ data }) => {
+      let params = {
+        current: this.currentPage,
+        size: this.pageSize,
+        keyword: this.keyword,
+        isCheck: this.isCheck,
+      };
+      getMessages(params).then(({ data }) => {
         this.messageList = data.data.recordList;
         this.count = data.data.count;
         this.loading = false;

@@ -1,16 +1,10 @@
 import request from "@/utlis/request";
 
-export function getComments(current, size, keyword, commentType, isCheck) {
+export function getComments(params) {
   return request({
     url: "/admin/comments",
     method: "get",
-    params: {
-      current,
-      size,
-      keyword,
-      commentType,
-      isCheck,
-    },
+    params,
   });
 }
 

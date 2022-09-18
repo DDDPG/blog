@@ -16,29 +16,11 @@ export function getArticle(articleId) {
 }
 
 // 分页关键字查询
-export function getArticles(
-  current,
-  size,
-  keyword,
-  status,
-  articleType,
-  categoryId,
-  tagId,
-  isDelete
-) {
+export function getArticles(params) {
   return request({
     url: "/admin/articles",
     method: "get",
-    params: {
-      current,
-      size,
-      keyword,
-      status,
-      articleType,
-      categoryId,
-      tagId,
-      isDelete,
-    },
+    params,
   });
 }
 

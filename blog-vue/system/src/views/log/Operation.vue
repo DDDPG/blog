@@ -199,13 +199,17 @@ export default {
       this.getOperationList();
     },
     getOperationList() {
-      getOperations(this.currentPage, this.pageSize, this.optModule, this.keyword).then(
-        ({ data }) => {
-          this.logList = data.data.recordList;
-          this.count = data.data.count;
-          this.loading = false;
-        }
-      );
+      let params = {
+        current: this.currentPage,
+        size: this.pageSize,
+        optModule: this.optModule,
+        keyword: this.keyword,
+      };
+      getOperations(params).then(({ data }) => {
+        this.logList = data.data.recordList;
+        this.count = data.data.count;
+        this.loading = false;
+      });
     },
     searchOperation() {
       this.currentPage = 1;

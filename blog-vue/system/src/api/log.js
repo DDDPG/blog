@@ -1,16 +1,11 @@
-import request from "@/utlis/request";
 import downloadService from "@/utlis/downloadService";
+import request from "@/utlis/request";
 
-export function getOperations(current, size, optModule, keyword) {
+export function getOperations(params) {
   return request({
     url: "/admin/operation/logs",
     method: "get",
-    params: {
-      current,
-      size,
-      optModule,
-      keyword,
-    },
+    params,
   });
 }
 
@@ -29,16 +24,11 @@ export function exportOperation() {
   });
 }
 
-export function getExceptions(current, size, optModule, keyword) {
+export function getExceptions(params) {
   return request({
     url: "/admin/exception/logs",
     method: "get",
-    params: {
-      current,
-      size,
-      optModule,
-      keyword,
-    },
+    params,
   });
 }
 

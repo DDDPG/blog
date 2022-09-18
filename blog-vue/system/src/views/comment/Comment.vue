@@ -136,7 +136,9 @@
           </el-button>
           <el-popconfirm
             style="margin-left: 10px"
-            :title="scope.row.isParent ? '删除评论后，评论下所有回复都会被删除，是否继续?' : '是否删除?'"
+            :title="
+              scope.row.isParent ? '删除评论后，评论下所有回复都会被删除，是否继续?' : '是否删除?'
+            "
             @confirm="deleteComment(scope.row.id, scope.row.isParent)"
           >
             <el-button size="mini" type="danger" slot="reference"> 删除 </el-button>
@@ -203,13 +205,14 @@ export default {
       this.isCheck = check;
     },
     getCommentList() {
-      getComments(
-        this.currentPage,
-        this.pageSize,
-        this.keyword,
-        this.commentType,
-        this.isCheck
-      ).then(({ data }) => {
+      let params = {
+        current: this.currentPage,
+        size: this.pageSize,
+        keyword: this.keyword,
+        commentType: this.commentType,
+        isCheck: this.isCheck,
+      };
+      getComments(params).then(({ data }) => {
         this.commentList = data.data.recordList;
         this.count = data.data.count;
         this.loading = false;

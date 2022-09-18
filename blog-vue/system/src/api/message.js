@@ -1,15 +1,10 @@
 import request from "@/utlis/request";
 
-export function getMessages(current, size, keyword, isCheck) {
+export function getMessages(params) {
   return request({
     url: "/admin/messages",
     method: "get",
-    params: {
-      current,
-      size,
-      keyword,
-      isCheck,
-    },
+    params,
   });
 }
 

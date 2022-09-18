@@ -176,13 +176,17 @@ export default {
       this.getExceptionList();
     },
     getExceptionList() {
-      getExceptions(this.currentPage, this.pageSize, this.optModule, this.keyword).then(
-        ({ data }) => {
-          this.logList = data.data.recordList;
-          this.count = data.data.count;
-          this.loading = false;
-        }
-      );
+      let params = {
+        current: this.currentPage,
+        size: this.pageSize,
+        optModule: this.optModule,
+        keyword: this.keyword,
+      };
+      getExceptions(params).then(({ data }) => {
+        this.logList = data.data.recordList;
+        this.count = data.data.count;
+        this.loading = false;
+      });
     },
     searchException() {
       this.currentPage = 1;

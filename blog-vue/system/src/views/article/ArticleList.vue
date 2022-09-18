@@ -369,16 +369,17 @@ export default {
       });
     },
     getArticleList() {
-      getArticles(
-        this.currentPage,
-        this.pageSize,
-        this.keyword,
-        this.status,
-        this.articleType,
-        this.categoryId,
-        this.tagId,
-        this.isDelete
-      ).then(({ data }) => {
+      let params = {
+        current: this.currentPage,
+        size: this.pageSize,
+        keyword: this.keyword,
+        status: this.status,
+        articleType: this.articleType,
+        categoryId: this.categoryId,
+        tagId: this.tagId,
+        isDelete: this.isDelete,
+      };
+      getArticles(params).then(({ data }) => {
         this.articleList = data.data.recordList;
         this.count = data.data.count;
         this.loading = false;

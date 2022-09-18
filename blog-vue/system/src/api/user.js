@@ -1,23 +1,14 @@
 import request from "@/utlis/request";
 
-export function getUsers(current, size, loginType, keyword) {
+export function getUsers(params) {
   return request({
     url: "/admin/users",
     method: "get",
-    params: {
-      current,
-      size,
-      loginType,
-      keyword,
-    },
+    params,
   });
 }
 
-export function changeUserStatus(id, status) {
-  const data = {
-    id,
-    status,
-  };
+export function changeUserStatus(data) {
   return request({
     url: "/admin/changeStatus",
     method: "put",

@@ -149,14 +149,20 @@ export default {
   },
   methods: {
     getUserList() {
-      getUsers(this.currentPage, this.pageSize, this.loginType, this.keyword).then(({ data }) => {
+      let params = {
+        current: this.currentPage,
+        size: this.pageSize,
+        loginType: this.loginType,
+        keyword: this.keyword,
+      };
+      getUsers(params).then(({ data }) => {
         this.userList = data.data.recordList;
         this.count = data.data.count;
         this.loading = false;
       });
     },
     handleStatusChange(user) {
-      changeUserStatus(user.id, user.status).then(({ data }) => {
+      changeUserStatus({ id: user.id, status: user.status }).then(({ data }) => {
         if (data.flag) {
           this.$notify.success({
             title: "成功",
