@@ -103,7 +103,7 @@ blog-springboot
 
 **前端：** vue + vuex + vue-router + axios + vuetify + element-ui + echarts
 
-**后端：** SpringBoot + Quartz + Thymeleaf + Nginx + Docker + SpringSecurity + Swagger2 + MyBatisPlus + Mysql + Redis + ElasticSearch + RabbitMQ
+**后端：** SpringBoot + JWT + Quartz + Thymeleaf + Nginx + Docker + SpringSecurity + Swagger2 + MyBatisPlus + Mysql + Redis + ElasticSearch + RabbitMQ
 
 **其他：** 接入QQ、微博、Gitee、Github第三方登录
 
