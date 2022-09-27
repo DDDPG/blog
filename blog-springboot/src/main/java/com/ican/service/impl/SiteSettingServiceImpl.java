@@ -171,9 +171,12 @@ public class SiteSettingServiceImpl extends ServiceImpl<SiteSettingMapper, SiteS
             // 统计游客地域分布
             String ipSource = IpUtils.getCityInfo(ipAddress);
             if (StringUtils.hasText(ipSource)) {
-                // 游客省份
-                ipSource = ipSource.split("\\|")[1].replaceAll(PROVINCE, "");
-                redisService.incrHash(VISITOR_ZONE, ipSource, 1L);
+                String[] split = ipSource.split("\\|");
+                if (split.length > 1) {
+                    // 游客省份
+                    ipSource = split[1].replaceAll(PROVINCE, "");
+                    redisService.incrHash(VISITOR_ZONE, ipSource, 1L);
+                }
             } else {
                 redisService.incrHash(VISITOR_ZONE, UNKNOWN, 1L);
             }
