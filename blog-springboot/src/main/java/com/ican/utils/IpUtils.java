@@ -91,9 +91,6 @@ public class IpUtils {
      * @return
      */
     public static String getCityInfo(String ip) {
-        if ("127.0.0.1".equals(ip) || StringUtils.startsWithIgnoreCase(ip, "192.168")) {
-            return "内网IP";
-        }
         try {
             String address = searcher.searchByStr(ip);
             if (StringUtils.hasText(address)) {
@@ -103,7 +100,7 @@ public class IpUtils {
             }
             return address;
         } catch (Exception e) {
-            throw new ServiceException("获取地理位置失败");
+            return "";
         }
     }
 }
